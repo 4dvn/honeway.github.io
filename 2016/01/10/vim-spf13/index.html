@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo-mine.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="想要把vim当成IDE用，又觉得配置麻烦，那就使用spf13,偷懒专属。在gvim里spf13表现更佳。">
+<meta name="keywords" content="Vim,Gvim,spf13">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim的spf13配置与操作">
+<meta property="og:url" content="https://ifhw.github.io/2016/01/10/vim-spf13/index.html">
+<meta property="og:site_name" content="Henry&#39;s Blog">
+<meta property="og:description" content="想要把vim当成IDE用，又觉得配置麻烦，那就使用spf13,偷懒专属。在gvim里spf13表现更佳。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2016-05-15T13:56:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vim的spf13配置与操作">
+<meta name="twitter:description" content="想要把vim当成IDE用，又觉得配置麻烦，那就使用spf13,偷懒专属。在gvim里spf13表现更佳。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://ifhw.github.io/2016/01/10/vim-spf13/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Vim的spf13配置与操作 | Henry's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Henry's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">漫漫开发路，悠悠笃行之。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ifhw.github.io/2016/01/10/vim-spf13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Henry">
+      <meta itemprop="description" content="漫漫开发路，悠悠笃行之。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Henry's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vim的spf13配置与操作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-01-10 20:51:27" itemprop="dateCreated datePublished" datetime="2016-01-10T20:51:27+08:00">2016-01-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2016-05-15 21:56:52" itemprop="dateModified" datetime="2016-05-15T21:56:52+08:00">2016-05-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Vim/" itemprop="url" rel="index"><span itemprop="name">Vim</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>想要把vim当成IDE用，又觉得配置麻烦，那就使用spf13,偷懒专属。在gvim里spf13表现更佳。</p>
+<a id="more"></a>
+<h1 id="配置vim"><a href="#配置vim" class="headerlink" title="配置vim"></a>配置vim</h1><p>插件地址:<a href="https://github.com/spf13/spf13-vim" target="_blank" rel="noopener">https://github.com/spf13/spf13-vim</a></p>
+<p>安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/spf13/spf13-vim.git</span><br><span class="line"><span class="built_in">cd</span> spf13-vim</span><br><span class="line">./bootstrap.sh</span><br></pre></td></tr></table></figure>
+<h1 id="关于Leader"><a href="#关于Leader" class="headerlink" title="关于Leader"></a>关于Leader</h1><p> <code>&lt;Leader&gt;</code> Vim默认的是<code>\</code>,spf13修改为<code>,</code></p>
+<h1 id="配色修改"><a href="#配色修改" class="headerlink" title="配色修改"></a>配色修改</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#echo colorscheme &#123;$colorscheme&#125;  &gt;&gt; ~/.vimrc.local</span></span><br><span class="line"><span class="built_in">echo</span> colorscheme onedark &gt;&gt; ~/.vimrc.local <span class="comment"># 使用onedark配色</span></span><br></pre></td></tr></table></figure>
+<p>onedark 是Atom的默认配色。我的vim使用solarized各种问题，就改用onedark了。<br>color theme网站：<a href="http://vimcolors.com/" target="_blank" rel="noopener">http://vimcolors.com/</a><br>安装vim-gnome后,在gvim里solarized表现完美。</p>
+<h1 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h1><pre><code>sudo apt install fonts-inconsolata
+</code></pre><p>个人喜欢Inconsolata字体,是最受欢迎的编程字体之一。</p>
+<h1 id="vim-indent-guides-缩进线"><a href="#vim-indent-guides-缩进线" class="headerlink" title="vim-indent-guides 缩进线"></a>vim-indent-guides 缩进线</h1><p><a href="https://github.com/nathanaelkane/vim-indent-guides" target="_blank" rel="noopener">https://github.com/nathanaelkane/vim-indent-guides</a><br>用来优化展示缩进， 在GVim 中这个插件展示的很完美，可以自动识别背景色来展示。但是在终端环境中，只能显示dark/light两种模式，缩进看起来一块一块的，比较难看。<br>在.vimrc.local 中添加<code>let g:indent_guides_auto_colors = 0</code>关闭。 开启方式<code>&lt;Leader&gt;ig</code></p>
+<h1 id="NERDTree"><a href="#NERDTree" class="headerlink" title="NERDTree"></a>NERDTree</h1><p><a href="https://github.com/scrooloose/nerdtree" target="_blank" rel="noopener">https://github.com/scrooloose/nerdtree</a><br><code>&lt;C-E&gt;</code> 开启关闭NERDTree<br><code>&lt;leader&gt;e</code> or <code>&lt;leader&gt;nt</code> 定位到当前打开文件的位置<br><code>:help NERDTree</code>查看帮助  </p>
+<h1 id="ctrlp"><a href="#ctrlp" class="headerlink" title="ctrlp"></a>ctrlp</h1><p><a href="https://github.com/kien/ctrlp.vim" target="_blank" rel="noopener">https://github.com/kien/ctrlp.vim</a></p>
+<p>Vim中的文件查找器<br><code>:CtrlP</code> or <code>:CtrlP [starting-directory]</code> 启动ctrlp，快捷键 <code>&lt;C-P&gt;</code><br><code>:CtrlPBuffer</code> or <code>:CtrlPMRU</code> 启动ctrlp并只在buffer/mru中进行查找<br><code>:CtrlPMixed</code> 在 Files, Buffers 和 MRU 中进行混合查找</p>
+<p>开启后的更多操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Press &lt;F5&gt; to purge the cache for the current directory to get new files, remove deleted files and apply new ignore options.</span><br><span class="line">Press &lt;c-f&gt; and &lt;c-b&gt; to cycle between modes.</span><br><span class="line">Press &lt;c-d&gt; to switch to filename only search instead of full path.</span><br><span class="line">Press &lt;c-r&gt; to switch to regexp mode.</span><br><span class="line">Use &lt;c-j&gt;, &lt;c-k&gt; or the arrow keys to navigate the result list.</span><br><span class="line">Use &lt;c-t&gt; or &lt;c-v&gt;, &lt;c-x&gt; to open the selected entry in a new tab or in a new split.</span><br><span class="line">Use &lt;c-n&gt;, &lt;c-p&gt; to select the next/previous string in the prompt&apos;s history.</span><br><span class="line">Use &lt;c-y&gt; to create a new file and its parent directories.</span><br><span class="line">Use &lt;c-z&gt; to mark/unmark multiple files and &lt;c-o&gt; to open them.</span><br></pre></td></tr></table></figure></p>
+<h1 id="surround"><a href="#surround" class="headerlink" title="surround"></a>surround</h1><p><a href="https://github.com/tpope/vim-surround" target="_blank" rel="noopener">https://github.com/tpope/vim-surround</a><br>用来处理包围符号的插件，包括’ “ { } [ ]等<br>用法示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Old text                  Command     New text ~</span><br><span class="line">&quot;Hello *world!&quot;           ds&quot;         Hello world!</span><br><span class="line">[123+4*56]/2              cs])        (123+456)/2</span><br><span class="line">&quot;Look ma, I&apos;m *HTML!&quot;     cs&quot;&lt;q&gt;      &lt;q&gt;Look ma, I&apos;m HTML!&lt;/q&gt;</span><br><span class="line">if *x&gt;3 &#123;                 ysW(        if ( x&gt;3 ) &#123;</span><br><span class="line">my $str = *whee!;         vllllS&apos;     my $str = &apos;whee!&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>如果光标在<code>&quot;foo bar&quot;</code>之间，可以使用<code>cs&quot;&#39;</code>转换成<code>&#39;foo bar&#39;</code><br><code>*</code>表示光标位置。<code>:help surround</code>查看帮助</p>
+<h1 id="nerdcommenter注释"><a href="#nerdcommenter注释" class="headerlink" title="nerdcommenter注释"></a>nerdcommenter注释</h1><p><a href="https://github.com/scrooloose/nerdcommenter" target="_blank" rel="noopener">https://github.com/scrooloose/nerdcommenter</a></p>
+<p><code>&lt;Leader&gt;cc</code> 注释一行<br><code>&lt;Leader&gt;cu</code> 取消注释一行<br><code>&lt;Leader&gt;ca</code> 切换注释模式// 或 /**/<br><code>&lt;Leader&gt;cm</code> 以block的最简方式注释一段代码<br><code>&lt;Leader&gt;ci</code> 以独立注释单行的方式 注释选中的每一行， 注释模式取决<code>&lt;Leader&gt;ca</code><br><code>&lt;Leader&gt;cs</code> 以block的常规方式注释一段代码<br><code>&lt;Leader&gt;cA</code> 在行尾巴追加注释，注释模式取决于<code>&lt;Leader&gt;ca</code></p>
+<h1 id="关于补全"><a href="#关于补全" class="headerlink" title="关于补全"></a>关于补全</h1><p>spf13 提供了4种补全插件供我们选择(只能选择其中之一)<br>neocomplcache <a href="https://github.com/shougo/neocomplcache" target="_blank" rel="noopener">https://github.com/shougo/neocomplcache</a><br>YouCompleteMe <a href="https://github.com/Valloric/YouCompleteMe" target="_blank" rel="noopener">https://github.com/Valloric/YouCompleteMe</a><br>neocomplete <a href="https://github.com/Shougo/neocomplete.vim" target="_blank" rel="noopener">https://github.com/Shougo/neocomplete.vim</a></p>
+<p>默认使用neocomplete，需要lua支持，默认的vim好像没有带。</p>
+<pre><code>vim --version | grep lua
+</code></pre><p>自己编译安装，或者安装vim-nox,vim-gnome,vim-gtk都是可以的。<br>可以看到+lua就是支持了。</p>
+<h1 id="tabular对齐"><a href="#tabular对齐" class="headerlink" title="tabular对齐"></a>tabular对齐</h1><p><a href="https://github.com/godlygeek/tabular" target="_blank" rel="noopener">https://github.com/godlygeek/tabular</a><br>可以对 <code>= : ,</code> 做对齐操作</p>
+<p><code>&lt;Leader&gt;a=</code> 对<code>=</code>进行对齐操作<br><code>&lt;Leader&gt;a:</code> 对<code>:</code>进行对齐操作<br><code>&lt;Leader&gt;a::</code> 对<code>:</code> 后面的内容做对其操作，而<code>:</code>靠前紧贴<br><code>&lt;Leader&gt;a,</code> 对<code>,</code>进行对齐操作</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vim/" rel="tag"># Vim</a>
+          
+            <a href="/tags/Gvim/" rel="tag"># Gvim</a>
+          
+            <a href="/tags/spf13/" rel="tag"># spf13</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/29/vim-multi-files-operate/" rel="next" title="Vim多文件操作">
+                <i class="fa fa-chevron-left"></i> Vim多文件操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/11/git-notes/" rel="prev" title="Git常用命令备忘录">
+                Git常用命令备忘录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Henry" />
+            
+              <p class="site-author-name" itemprop="name">Henry</p>
+              <p class="site-description motion-element" itemprop="description">漫漫开发路，悠悠笃行之。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置vim"><span class="nav-number">1.</span> <span class="nav-text">配置vim</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于Leader"><span class="nav-number">2.</span> <span class="nav-text">关于Leader</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配色修改"><span class="nav-number">3.</span> <span class="nav-text">配色修改</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字体"><span class="nav-number">4.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim-indent-guides-缩进线"><span class="nav-number">5.</span> <span class="nav-text">vim-indent-guides 缩进线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NERDTree"><span class="nav-number">6.</span> <span class="nav-text">NERDTree</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ctrlp"><span class="nav-number">7.</span> <span class="nav-text">ctrlp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#surround"><span class="nav-number">8.</span> <span class="nav-text">surround</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nerdcommenter注释"><span class="nav-number">9.</span> <span class="nav-text">nerdcommenter注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于补全"><span class="nav-number">10.</span> <span class="nav-text">关于补全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tabular对齐"><span class="nav-number">11.</span> <span class="nav-text">tabular对齐</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Henry</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

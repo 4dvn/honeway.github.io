@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo-mine.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="记录Ubuntu/Linuxmint环境下，个人必备的一些应用的安装及配置。zsh, vim, shadowsocks, typora等等。">
+<meta name="keywords" content="Ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu首选的应用程序和配置">
+<meta property="og:url" content="https://ifhw.github.io/2017/06/05/prefered-applications-and-settings-for-ubuntu/index.html">
+<meta property="og:site_name" content="Henry&#39;s Blog">
+<meta property="og:description" content="记录Ubuntu/Linuxmint环境下，个人必备的一些应用的安装及配置。zsh, vim, shadowsocks, typora等等。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-07-10T14:58:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu首选的应用程序和配置">
+<meta name="twitter:description" content="记录Ubuntu/Linuxmint环境下，个人必备的一些应用的安装及配置。zsh, vim, shadowsocks, typora等等。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://ifhw.github.io/2017/06/05/prefered-applications-and-settings-for-ubuntu/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Ubuntu首选的应用程序和配置 | Henry's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Henry's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">漫漫开发路，悠悠笃行之。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ifhw.github.io/2017/06/05/prefered-applications-and-settings-for-ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Henry">
+      <meta itemprop="description" content="漫漫开发路，悠悠笃行之。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Henry's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ubuntu首选的应用程序和配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-06-05 10:30:27" itemprop="dateCreated datePublished" datetime="2017-06-05T10:30:27+08:00">2017-06-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2017-07-10 22:58:51" itemprop="dateModified" datetime="2017-07-10T22:58:51+08:00">2017-07-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录Ubuntu/Linuxmint环境下，个人必备的一些应用的安装及配置。zsh, vim, shadowsocks, typora等等。</p>
+<a id="more"></a>
+<h1 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h1><p>查看所有shell：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/shells</span><br></pre></td></tr></table></figure>
+<p>安装zsh:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install zsh</span><br></pre></td></tr></table></figure>
+<p>切换到zsh：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /bin/zsh	# 根据提示输入当前用户密码</span><br></pre></td></tr></table></figure>
+<p>安装oh my zsh（先安装git）:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh</span><br></pre></td></tr></table></figure>
+<p>暂时使用默认配置。</p>
+<h1 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h1><p>GUI版：<a href="https://github.com/shadowsocks/shadowsocks-qt5" target="_blank" rel="noopener">shadowsocks-qt5</a></p>
+<p>安装命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:hzwhuang/ss-qt5</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install shadowsocks-qt5</span><br></pre></td></tr></table></figure>
+<p>免费SS站点：</p>
+<p><a href="http://freess.org/" target="_blank" rel="noopener">http://freess.org/</a></p>
+<h1 id="SwitchyOmega"><a href="#SwitchyOmega" class="headerlink" title="SwitchyOmega"></a>SwitchyOmega</h1><p>浏览器插件，用于代理上网</p>
+<p>项目地址：<a href="https://github.com/FelisCatus/SwitchyOmega" target="_blank" rel="noopener">https://github.com/FelisCatus/SwitchyOmega</a></p>
+<p>Chrome浏览器下载地址（无需翻墙）：<a href="https://www.google.cn/chrome/browser/desktop/index.html" target="_blank" rel="noopener">https://www.google.cn/chrome/browser/desktop/index.html</a></p>
+<p><strong>安装</strong><br>安装方式一：<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif/?hl=en" target="_blank" rel="noopener">Google Web Store</a> （能上Google的前提下推荐使用）</p>
+<p>安装方式二：<a href="https://github.com/FelisCatus/SwitchyOmega/releases" target="_blank" rel="noopener">Github最新离线安装包</a> （不能上Google时使用），下载<code>.crx</code>后缀的文件，直接拖到<a href="chrome://extensions/" target="_blank" rel="noopener">chrome的插件管理页</a>即可安装</p>
+<p><strong>配置</strong><br>配置文件：<a href="https://raw.githubusercontent.com/wiki/FelisCatus/SwitchyOmega/GFWList.bak" target="_blank" rel="noopener">GFWList.bak</a></p>
+<p>在“导入/导出”位置，选择“从备份文件恢复”，选择下载的GFWList.bak即可导入，或 选“在线恢复”，直接粘贴配置文件的地址。</p>
+<p>选择自动切换后更新规则即可。</p>
+<p>GFWList项目地址：<a href="https://github.com/gfwlist/gfwlist" target="_blank" rel="noopener">https://github.com/gfwlist/gfwlist</a></p>
+<p>规则列表地址： <a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener">https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</a> </p>
+<h1 id="polipo"><a href="#polipo" class="headerlink" title="polipo"></a>polipo</h1><p><strong>用于socks转http代理</strong></p>
+<p>安装命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install polipo</span><br></pre></td></tr></table></figure>
+<p>配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/polipo/config</span><br></pre></td></tr></table></figure>
+<p>我的配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">logSyslog = true</span><br><span class="line">logFile = /var/log/polipo/polipo.log</span><br><span class="line">socksParentProxy = &quot;localhost:1080&quot;</span><br><span class="line">socksProxyType = socks5</span><br><span class="line">logLevel=4</span><br></pre></td></tr></table></figure>
+<p>我的shadowsocks地址和端口均使用的默认的，即<code>localhost:1080</code></p>
+<p>临时使用的话无需修改默认配置，使用下面命令即可设置上级socks代理为shadowsocks端口:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">polipo socksParentProxy=localhost:1080</span><br></pre></td></tr></table></figure>
+<p>服务开启与关闭：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service polipo start	# 打开</span><br><span class="line">sudo service polipo stop	# 关闭</span><br></pre></td></tr></table></figure>
+<p>Polipo默认的代理地址是 <code>http_proxy=http://localhost:8123</code> </p>
+<p>对于需要http代理的命令，在命令前加上一句<code>http_proxy=http://localhost:8123</code> 即可。</p>
+<p>不想每条命令都加前缀则可以使用export命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=http://localhost:8123	# 仅当前终端有效</span><br></pre></td></tr></table></figure>
+<p>或者定义个别名，在shell的配置文件里（bash的.bashrc或zsh的.zshrc）加下面行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias useproxy=&quot;http_proxy=http://localhost:8123&quot;</span><br></pre></td></tr></table></figure>
+<p>http代理常见用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http_proxy=http://localhost:8123 apt-get update </span><br><span class="line"></span><br><span class="line">http_proxy=http://localhost:8123 curl www.google.com </span><br><span class="line">http_proxy=http://localhost:8123 wget www.google.com </span><br><span class="line">useproxy curl www.google.com</span><br><span class="line"></span><br><span class="line">git config --global http.proxy 127.0.0.1:8123	# 配置git http代理</span><br><span class="line">git clone https://github.com/xxx/xxx.git </span><br><span class="line">git config --global --unset-all http.proxy	# 取消git http代理</span><br></pre></td></tr></table></figure>
+<h1 id="Vim"><a href="#Vim" class="headerlink" title="Vim"></a>Vim</h1><p>安装gvim就自带了vim，都有剪切板功能。</p>
+<p>个人经常安装基于gtk3的GUI版本。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install vim-gtk3</span><br></pre></td></tr></table></figure>
+<p>使用spf13配置，项目地址：<a href="https://github.com/spf13/spf13-vim" target="_blank" rel="noopener">https://github.com/spf13/spf13-vim</a></p>
+<p>在<code>.vimrc.before.fork</code>中自定义需要安装的插件组 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming', 'python', 'javascript', 'html', 'misc',]</span><br></pre></td></tr></table></figure>
+<p>安装配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useproxy curl https://j.mp/spf13-vim3 -L -o - | sh	# useproxy 是之前定义的polipo代理别名</span><br></pre></td></tr></table></figure>
+<p>作者给出的安装脚本的短链地址需要翻墙，所以用了一下polipo的代理。</p>
+<p>可以直接用github的链接安装。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://raw.githubusercontent.com/spf13/spf13-vim/3.0/bootstrap.sh -L -o - | sh</span><br></pre></td></tr></table></figure>
+<p>用YouCompeleteMe补全，还需要进<code>~/.vim/bundle/YouCompleteMe</code>目录执行<code>./install.py</code>编译。</p>
+<p>用户自定义配置<code>.vimrc.local</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> " for C++ indent :help cino-g and :help cino-h</span><br><span class="line"> set cinoptions+=g0</span><br><span class="line"> " 取消换行自动注释</span><br><span class="line"> autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o</span><br><span class="line"></span><br><span class="line">if has("gui_running")</span><br><span class="line">    set guifont=Source\ Code\ Pro\ 12</span><br><span class="line">    set lines=40 columns=100</span><br><span class="line">    colorscheme solarized</span><br><span class="line">else</span><br><span class="line">    colorscheme onedark</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>目前喜欢Source Code Pro字体</p>
+<h1 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h1><p>全平台markdown编辑器，<a href="https://typora.io/" target="_blank" rel="noopener">https://typora.io/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># optional, but recommended</span><br><span class="line">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE</span><br><span class="line"></span><br><span class="line"># add Typora&apos;s repository</span><br><span class="line">sudo add-apt-repository &apos;deb https://typora.io ./linux/&apos;</span><br><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line"># install typora</span><br><span class="line">sudo apt-get install typora</span><br></pre></td></tr></table></figure>
+<h1 id="fonts"><a href="#fonts" class="headerlink" title="fonts"></a>fonts</h1><p>Ubuntu安装Source Code Pro</p>
+<p>安装命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /tmp/adodefont </span><br><span class="line">cd /tmp/adodefont </span><br><span class="line">wget -q --show-progress -O source-code-pro.zip https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip </span><br><span class="line">unzip -q source-code-pro.zip -d source-code-pro </span><br><span class="line">mkdir -p ~/.fonts </span><br><span class="line">cp -v source-code-pro/*/OTF/*.otf ~/.fonts/ </span><br><span class="line">fc-cache -f </span><br><span class="line">rm -rf source-code-pro&#123;,.zip&#125;</span><br></pre></td></tr></table></figure>
+<p>或者将下列命令写到shell脚本执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash </span></span><br><span class="line">set -euo pipefail I1FS=$'\n\t' </span><br><span class="line">mkdir -p /tmp/adodefont </span><br><span class="line">cd /tmp/adodefont </span><br><span class="line">wget -q --show-progress -O source-code-pro.zip https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.zip </span><br><span class="line">unzip -q source-code-pro.zip -d source-code-pro </span><br><span class="line">mkdir -p ~/.fonts </span><br><span class="line">cp -v source-code-pro/*/OTF/*.otf ~/.fonts/ </span><br><span class="line">fc-cache -f </span><br><span class="line">rm -rf source-code-pro&#123;,.zip&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="f-lux"><a href="#f-lux" class="headerlink" title="f.lux"></a>f.lux</h1><p>根据时间调整色温，护眼。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:nathan-renniewaldock/flux</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install fluxgui</span><br></pre></td></tr></table></figure>
+<h1 id="其他deb"><a href="#其他deb" class="headerlink" title="其他deb"></a>其他deb</h1><p>搜狗拼音：<a href="http://pinyin.sogou.com/linux/?r=pinyin" target="_blank" rel="noopener">http://pinyin.sogou.com/linux/?r=pinyin</a></p>
+<p>Chrome：<a href="https://www.google.cn/chrome/browser/desktop/index.html" target="_blank" rel="noopener">https://www.google.cn/chrome/browser/desktop/index.html</a></p>
+<p>网易云音乐：<a href="http://music.163.com/#/download" target="_blank" rel="noopener">http://music.163.com/#/download</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/14/wr703n-mount-udisk/" rel="next" title="品胜 WPR001N 和 TP-Link WR703N 挂载U盘扩展磁盘空间">
+                <i class="fa fa-chevron-left"></i> 品胜 WPR001N 和 TP-Link WR703N 挂载U盘扩展磁盘空间
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Henry" />
+            
+              <p class="site-author-name" itemprop="name">Henry</p>
+              <p class="site-description motion-element" itemprop="description">漫漫开发路，悠悠笃行之。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zsh"><span class="nav-number">1.</span> <span class="nav-text">zsh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shadowsocks"><span class="nav-number">2.</span> <span class="nav-text">shadowsocks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SwitchyOmega"><span class="nav-number">3.</span> <span class="nav-text">SwitchyOmega</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#polipo"><span class="nav-number">4.</span> <span class="nav-text">polipo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vim"><span class="nav-number">5.</span> <span class="nav-text">Vim</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Typora"><span class="nav-number">6.</span> <span class="nav-text">Typora</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fonts"><span class="nav-number">7.</span> <span class="nav-text">fonts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#f-lux"><span class="nav-number">8.</span> <span class="nav-text">f.lux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他deb"><span class="nav-number">9.</span> <span class="nav-text">其他deb</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Henry</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

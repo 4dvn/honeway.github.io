@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo-mine.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="项目里使用一款GigE Vision标准的相机，黑白的，了解了一下不同PixelFormat 类型的数据结构。">
+<meta name="keywords" content="GigE,Mono8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GigE Vision Pixel Formats介绍">
+<meta property="og:url" content="https://ifhw.github.io/2016/03/16/gige-vision-camera-pixel-formats/index.html">
+<meta property="og:site_name" content="Henry&#39;s Blog">
+<meta property="og:description" content="项目里使用一款GigE Vision标准的相机，黑白的，了解了一下不同PixelFormat 类型的数据结构。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2016-05-06T04:03:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GigE Vision Pixel Formats介绍">
+<meta name="twitter:description" content="项目里使用一款GigE Vision标准的相机，黑白的，了解了一下不同PixelFormat 类型的数据结构。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://ifhw.github.io/2016/03/16/gige-vision-camera-pixel-formats/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>GigE Vision Pixel Formats介绍 | Henry's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Henry's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">漫漫开发路，悠悠笃行之。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ifhw.github.io/2016/03/16/gige-vision-camera-pixel-formats/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Henry">
+      <meta itemprop="description" content="漫漫开发路，悠悠笃行之。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Henry's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GigE Vision Pixel Formats介绍
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2016-03-16 16:30:15" itemprop="dateCreated datePublished" datetime="2016-03-16T16:30:15+08:00">2016-03-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2016-05-06 12:03:18" itemprop="dateModified" datetime="2016-05-06T12:03:18+08:00">2016-05-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/VIMBA/" itemprop="url" rel="index"><span itemprop="name">VIMBA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目里使用一款GigE Vision标准的相机，黑白的，了解了一下不同PixelFormat 类型的数据结构。<br><a id="more"></a></p>
+<h2 id="Mono8"><a href="#Mono8" class="headerlink" title="Mono8"></a>Mono8</h2><p>相机的PixelFormat设置成Mono8,输出每像素8bit，数据类型”unsigned char”,像素值范围0x00-0xFF(0-255).<br>像素缓存结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>Byte</th>
+<th>Pixel-Data Bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B0</td>
+<td>P0       7 … 0</td>
+</tr>
+<tr>
+<td>B1</td>
+<td>P1       7 … 0</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>P2       7 … 0</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td>Bm-2</td>
+<td>Pn-2     7 … 0</td>
+</tr>
+<tr>
+<td>Bm-1</td>
+<td>Pn-1     7 … 0</td>
+</tr>
+<tr>
+<td>Bm</td>
+<td>Pn       7 … 0</td>
+</tr>
+</tbody>
+</table>
+<p>P0 = the first pixel transmitted by the camera<br>Pn = the last pixel transmitted by the camera<br>B0 = the first byte in the buffer<br>Bm = the last byte in the buffer</p>
+<h2 id="Mono12"><a href="#Mono12" class="headerlink" title="Mono12"></a>Mono12</h2><p>每像素使用2 Byte,每像素16位，有效数据只有12位，无效的4位填充0，数据类型”unsigned short (littleendian)”，像素值范围0x0000-0x0FFF(0-4095)<br>帧缓存结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>Byte</th>
+<th>Pixel-Data Bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B0</td>
+<td>P0       7 … 0</td>
+</tr>
+<tr>
+<td>B1</td>
+<td>P0  x x x x 11 … 8</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>P1       7 … 0</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>P1  x x x x 11 … 8</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>P2       7 … 0</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>P2  x x x x 11 … 8</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td>Bm-5</td>
+<td>Pn-2     7…0</td>
+</tr>
+<tr>
+<td>Bm-4</td>
+<td>Pn-2  x x x x 11 … 8</td>
+</tr>
+<tr>
+<td>Bm-3</td>
+<td>Pn-1       7 … 0</td>
+</tr>
+<tr>
+<td>Bm-2</td>
+<td>Pn-1  x x x x 11 … 8</td>
+</tr>
+<tr>
+<td>Bm-1</td>
+<td>Pn       7…0</td>
+</tr>
+<tr>
+<td>Bm</td>
+<td>Pn  x x x x 11 … 8</td>
+</tr>
+</tbody>
+</table>
+<p>P0 = the first pixel transmitted by the camera<br>Pn = the last pixel transmitted by the camera<br>B0 = the first byte in the buffer<br>Bm = the last byte in the buffer<br>x = unused bit, zero filled</p>
+<h2 id="Mono-12-Packed-Format"><a href="#Mono-12-Packed-Format" class="headerlink" title="Mono 12 Packed Format"></a>Mono 12 Packed Format</h2><p>每2像素使用3 Byte,每像素12位,数据类型”unsigned”，像素值范围0x0000-0x0FFF(0-4095) ，相比Mono12节省空间。<br>像素缓存结构如下：</p>
+<table>
+<thead>
+<tr>
+<th>Byte</th>
+<th>Pixel-Data Bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B0</td>
+<td>P0       11 … 4</td>
+</tr>
+<tr>
+<td>B1</td>
+<td>P1  3 … 0  P0  3 … 0</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>P1       11 … 4</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>P2       11 … 4</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>P3  3 … 0  P2  3 … 0</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>P3       11 … 4</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td>Bm-5</td>
+<td>Pn-3       11 … 4</td>
+</tr>
+<tr>
+<td>Bm-4</td>
+<td>Pm-2  3 … 0  Pn-3  3 … 0</td>
+</tr>
+<tr>
+<td>Bm-3</td>
+<td>Pn-2       11 … 4</td>
+</tr>
+<tr>
+<td>Bm-2</td>
+<td>Pn-1       11 … 4</td>
+</tr>
+<tr>
+<td>Bm-1</td>
+<td>Pn  3 … 0  Pn  3 … 0</td>
+</tr>
+<tr>
+<td>Bm</td>
+<td>Pn       11 … 4</td>
+</tr>
+</tbody>
+</table>
+<p>P0 = the first pixel transmitted by the camera<br>Pn = the last pixel transmitted by the camera<br>B0 = the first byte in the buffer<br>Bm = the last byte in the buffer</p>
+<p>还有Mono10,Mono14,Mono16等。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GigE/" rel="tag"># GigE</a>
+          
+            <a href="/tags/Mono8/" rel="tag"># Mono8</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/15/creat-mat-from-vimba-frame-data/" rel="next" title="使用Vimba获取的图像数据初始化Mat">
+                <i class="fa fa-chevron-left"></i> 使用Vimba获取的图像数据初始化Mat
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/25/find-the-file-contains-certain-strings/" rel="prev" title="Linux查找目录下的所有文件中是否含有某个字符串">
+                Linux查找目录下的所有文件中是否含有某个字符串 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Henry" />
+            
+              <p class="site-author-name" itemprop="name">Henry</p>
+              <p class="site-description motion-element" itemprop="description">漫漫开发路，悠悠笃行之。</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mono8"><span class="nav-number">1.</span> <span class="nav-text">Mono8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mono12"><span class="nav-number">2.</span> <span class="nav-text">Mono12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mono-12-Packed-Format"><span class="nav-number">3.</span> <span class="nav-text">Mono 12 Packed Format</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Henry</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Gemini</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
